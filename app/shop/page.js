@@ -60,7 +60,7 @@ export default function Shop() {
   return (
     <div className="flex flex-col min-h-screen">
       <Header />
-      <main className="flex-grow pt-16 ">
+      <main className="flex-grow ">
         {" "}
         {/* Adjusted padding-top */}
         <div className="bg-gray-100 py-4 md:py-8">

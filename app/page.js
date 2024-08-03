@@ -10,7 +10,7 @@ export default function Home() {
     <div className="font-sans flex flex-col min-h-screen">
       <Header />
       <main className="flex-grow">
-        <div className="pt-[60px] md:pt-[72px]">
+        <div className="">
           <HeroCarousel />
         </div>
         <div className="container mx-auto px-4 space-y-12 py-12">

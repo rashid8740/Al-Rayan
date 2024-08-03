@@ -26,7 +26,7 @@ export default function Cart() {
   return (
     <div className="flex flex-col min-h-screen bg-gray-100">
       <Header />
-      <main className="flex-grow container mx-auto px-4 py-8 mt-14 md:mt-20">
+      <main className="flex-grow container mx-auto px-4 py-8  md:mt-20">
         {" "}
         {/* Added mt-20 here */}
         <h1 className="text-3xl font-bold mb-8 text-gray-800">Your Cart</h1>
