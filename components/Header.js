@@ -1,29 +1,28 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import Link from "next/link";
-import { usePathname } from "next/navigation";
+import { useSession, signOut } from "next-auth/react";
 import {
-  Menu,
-  Search,
   ShoppingCart,
   User,
+  ChevronDown,
+  Settings,
+  LogOut,
+  Menu,
+  Search,
   Phone,
   X,
-  ChevronRight,
-  Home,
-  ShoppingBag,
-  Gift,
-  LayoutGrid,
-  Zap,
-  Layers,
-  Award,
+  AwardIcon,
 } from "lucide-react";
 import { useCart } from "../contexts/CartContext";
+import { usePathname } from "next/navigation";
 
 const Header = () => {
-  const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const { data: session } = useSession();
   const { cart } = useCart();
+  const [isAccountMenuOpen, setIsAccountMenuOpen] = useState(false);
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
   const pathname = usePathname();
 
   const cartItemsCount = cart.reduce((total, item) => total + item.quantity, 0);
@@ -32,37 +31,51 @@ const Header = () => {
     0
   );
 
-  useEffect(() => {
-    if (isMenuOpen) {
-      document.body.style.overflow = "hidden";
-    } else {
-      document.body.style.overflow = "unset";
-    }
-
-    return () => {
-      document.body.style.overflow = "unset";
-    };
-  }, [isMenuOpen]);
-
   const menuItems = [
-    { href: "/", label: "Home", icon: Home },
-    { href: "/shop", label: "Our Store", icon: ShoppingBag },
+    { href: "/", label: "Home", icon: User },
+    { href: "/shop", label: "Our Store", icon: ShoppingCart },
     {
       href: "/special",
       label: "Special",
-      icon: Gift,
+      icon: User,
       badge: { text: "SALE", color: "bg-green-500" },
     },
     {
       href: "/categories",
       label: "Categories",
-      icon: LayoutGrid,
+      icon: Menu,
       badge: { text: "HOT", color: "bg-red-500" },
     },
-    { href: "/top-deals", label: "Top Deals", icon: Zap },
-    { href: "/elements", label: "Elements", icon: Layers },
-    { href: "/top-offers", label: "Top Offers", icon: Award },
+    { href: "/top-deals", label: "Top Deals", icon: User },
+    { href: "/elements", label: "Elements", icon: Settings },
+    { href: "/top-offers", label: "Top Offers", icon: User },
   ];
+
+  const AccountMenu = () => (
+    <div className="absolute right-0 mt-2 w-48 bg-white rounded-md overflow-hidden shadow-xl z-10">
+      <Link
+        href="/profile"
+        className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+      >
+        <User size={16} className="inline mr-2" />
+        Profile
+      </Link>
+      <Link
+        href="/account/settings"
+        className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+      >
+        <Settings size={16} className="inline mr-2" />
+        Settings
+      </Link>
+      <button
+        onClick={() => signOut()}
+        className="w-full text-left block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+      >
+        <LogOut size={16} className="inline mr-2" />
+        Sign out
+      </button>
+    </div>
+  );
 
   return (
     <header className="w-full sticky top-0 z-50">
@@ -77,9 +90,21 @@ const Header = () => {
             Al-Rayaan
           </Link>
           <div className="flex items-center space-x-4">
-            <Link href="/account">
-              <User size={24} className="text-gray-600" />
-            </Link>
+            {session ? (
+              <div className="relative">
+                <button
+                  onClick={() => setIsAccountMenuOpen(!isAccountMenuOpen)}
+                  className="text-gray-600"
+                >
+                  <User size={24} />
+                </button>
+                {isAccountMenuOpen && <AccountMenu />}
+              </div>
+            ) : (
+              <Link href="/auth/signin">
+                <User size={24} className="text-gray-600" />
+              </Link>
+            )}
             <Link href="/cart" className="relative">
               <ShoppingCart size={24} className="text-gray-600" />
               <span className="absolute -top-2 -right-2 bg-blue-600 text-white text-xs rounded-full w-5 h-5 flex items-center justify-center">
@@ -152,7 +177,7 @@ const Header = () => {
               className="text-2xl font-bold text-blue-600 flex items-center"
             >
               <ShoppingCart size={24} className="mr-1" />
-              Al-Rayaan.
+              Al-Rayaan
             </Link>
 
             {/* Search bar */}
@@ -161,9 +186,9 @@ const Header = () => {
                 <input
                   type="text"
                   placeholder="Search"
-                  className="w-full px-4 py-2 rounded-md border border-gray-300 focus:outline-none focus:ring-1 focus:ring-blue-500 bg-gray-100"
+                  className="w-full px-4 py-2 rounded-full border border-gray-300 focus:outline-none focus:ring-1 focus:ring-blue-500 bg-gray-100"
                 />
-                <button className="absolute right-0 top-0 mt-2 mr-2 text-gray-600 hover:text-blue-600">
+                <button className="absolute right-0 top-0 mt-3 mr-5 text-gray-600 hover:text-blue-600">
                   <Search size={20} />
                 </button>
               </div>
@@ -175,20 +200,39 @@ const Header = () => {
                 <Phone size={20} className="mr-2" />
                 <div>
                   <div className="text-xs">Need Help?</div>
-                  <div className="text-sm font-semibold">+01 123 456 7890</div>
+                  <div className="text-sm font-semibold">0790 577 973</div>
                 </div>
               </div>
               <div className="flex items-center border-r pr-6">
-                <User size={20} className="mr-2 text-gray-600" />
-                <div>
-                  <div className="text-xs">My Account</div>
+                {session ? (
+                  <div className="relative">
+                    <button
+                      onClick={() => setIsAccountMenuOpen(!isAccountMenuOpen)}
+                      className="flex items-center text-gray-600 hover:text-blue-600"
+                    >
+                      <User size={20} className="mr-2" />
+                      <div>
+                        <div className="text-xs">Welcome</div>
+                        <span className="text-sm font-semibold">
+                          {session.user.name}
+                        </span>
+                      </div>
+                      <ChevronDown size={16} className="ml-1" />
+                    </button>
+                    {isAccountMenuOpen && <AccountMenu />}
+                  </div>
+                ) : (
                   <Link
-                    href="/account"
-                    className="text-sm font-semibold hover:text-blue-600"
+                    href="/auth/signin"
+                    className="flex items-center text-gray-600 hover:text-blue-600"
                   >
-                    Log in
+                    <User size={20} className="mr-2" />
+                    <div>
+                      <div className="text-xs">My Account</div>
+                      <span className="text-sm font-semibold">Log in</span>
+                    </div>
                   </Link>
-                </div>
+                )}
               </div>
               <Link
                 href="/cart"
@@ -219,42 +263,32 @@ const Header = () => {
               Browse Categories
             </button>
             <div className="flex items-center space-x-6">
-              <Link href="/" className="hover:text-gray-200">
-                Home
-              </Link>
-              <Link href="/shop" className="hover:text-gray-200">
-                Our Store
-              </Link>
-              <Link
-                href="/special"
-                className="hover:text-gray-200 flex items-center"
-              >
-                Special{" "}
-                <span className="ml-1 bg-green-500 text-white text-xs px-1.5 py-0.5 rounded">
-                  SALE
-                </span>
-              </Link>
-              <Link
-                href="/categories"
-                className="hover:text-gray-200 flex items-center"
-              >
-                Categories{" "}
-                <span className="ml-1 bg-red-500 text-white text-xs px-1.5 py-0.5 rounded">
-                  HOT
-                </span>
-              </Link>
-              <Link href="/top-deals" className="hover:text-gray-200">
-                Top Deals
-              </Link>
-              <Link href="/elements" className="hover:text-gray-200">
-                Elements
-              </Link>
+              {menuItems.slice(0, -1).map((item) => (
+                <Link
+                  key={item.href}
+                  href={item.href}
+                  className="hover:text-gray-200 flex items-center"
+                >
+                  {item.label}
+                  {item.badge && (
+                    <span
+                      className={`ml-1 ${item.badge.color} text-white text-xs px-1.5 py-0.5 rounded`}
+                    >
+                      {item.badge.text}
+                    </span>
+                  )}
+                </Link>
+              ))}
             </div>
             <Link
               href="/top-offers"
               className="hover:text-gray-200 flex items-center"
             >
-              <span className="mr-1">⚙️</span> Top Offers
+              <span className="mr-1">
+                {" "}
+                <AwardIcon />{" "}
+              </span>{" "}
+              Top Offers
             </Link>
           </nav>
         </div>
@@ -314,18 +348,33 @@ const Header = () => {
                     </span>
                   )}
                 </div>
-                <ChevronRight size={16} className="text-gray-400" />
+                <ChevronDown size={16} className="text-gray-400" />
               </Link>
             ))}
           </nav>
           <div className="absolute bottom-0 left-0 right-0 p-4 bg-gray-50 border-t border-gray-200">
-            <Link
-              href="/account"
-              className="flex items-center text-gray-700 hover:text-blue-600"
-            >
-              <User size={20} className="mr-2" />
-              <span>My Account</span>
-            </Link>
+            {session ? (
+              <div className="flex items-center justify-between">
+                <div className="flex items-center text-gray-700">
+                  <User size={20} className="mr-2" />
+                  <span>{session.user.name}</span>
+                </div>
+                <button
+                  onClick={() => signOut()}
+                  className="text-red-600 hover:text-red-800"
+                >
+                  <LogOut size={20} />
+                </button>
+              </div>
+            ) : (
+              <Link
+                href="/auth/signin"
+                className="flex items-center text-gray-700 hover:text-blue-600"
+              >
+                <User size={20} className="mr-2" />
+                <span>Sign In</span>
+              </Link>
+            )}
           </div>
         </div>
       </div>

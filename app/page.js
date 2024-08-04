@@ -1,5 +1,5 @@
 import Header from "../components/Header";
-import HeroCarousel from "../components/HeroCarousel";
+import HeroBanners from "../components/HeroBanners";
 import FeaturedCategories from "../components/FeaturedCategories";
 import FeaturedProducts from "../components/FeaturedProducts";
 import Newsletter from "../components/Newsletter";
@@ -11,7 +11,7 @@ export default function Home() {
       <Header />
       <main className="flex-grow">
         <div className="">
-          <HeroCarousel />
+          <HeroBanners />
         </div>
         <div className="container mx-auto px-4 space-y-12 py-12">
           <FeaturedCategories />
