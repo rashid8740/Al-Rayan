@@ -35,7 +35,7 @@ const MainBanner = ({ banners }) => {
               <p className="text-orange-500 text-sm md:text-base uppercase mb-2 md:mb-3">
                 {banner.subtitle}
               </p>
-              <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold mb-3 md:mb-4">
+              <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold mb-3 md:mb-4 text-black">
                 {banner.title}
               </h2>
               <p className="text-sm md:text-base mb-6 md:mb-8">
@@ -117,12 +117,12 @@ const HeroBanners = () => {
   ];
 
   return (
-    <div className="container mx-auto px-4 py-8">
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 lg:h-[60vh]">
+    <div className="container mx-auto px-2 py-2">
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-2 lg:h-[60vh]">
         <div className="h-[30vh] lg:h-full">
           <MainBanner banners={mainBanners} />
         </div>
-        <div className="grid grid-cols-2 gap-4 h-[30vh] lg:h-[60vh]">
+        <div className="grid grid-cols-2 gap-2 h-[30vh] lg:h-[60vh]">
           <SmallBanner
             title="Laptops"
             subtitle="Best Sale"
