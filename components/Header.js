@@ -255,7 +255,7 @@ const Header = () => {
                 </div>
                 <div className="ml-2">
                   <div className="text-xs">My Cart</div>
-                  <div className="text-sm font-semibold">
+                  <div className="text-sm font-bold ">
                     {cartTotal.toFixed(2)}
                   </div>
                 </div>
@@ -265,9 +265,9 @@ const Header = () => {
         </div>
 
         {/* Navigation */}
-        <div className="w-full bg-orange-400">
-          <nav className="container mx-auto px-4 flex justify-between items-center py-3 text-white">
-            <button className="bg-orange-500 px-4 py-2 rounded-md hover:bg-orange-600 flex items-center transition duration-300">
+        <div className="w-full border-t shadow-sm border-gray-200">
+          <nav className="container mx-auto px-4 flex justify-between items-center py-3 text-gray-700">
+            <button className="bg-orange-500 text-white px-4 py-2 rounded-md hover:bg-orange-600 flex items-center transition duration-300">
               <Menu size={20} className="mr-2" />
               Browse Categories
             </button>
@@ -276,7 +276,7 @@ const Header = () => {
                 <Link
                   key={item.href}
                   href={item.href}
-                  className="hover:text-orange-100 transition duration-300 flex items-center"
+                  className="hover:text-orange-500 transition duration-300 flex items-center"
                 >
                   {item.label}
                   {item.badge && (
@@ -291,7 +291,7 @@ const Header = () => {
             </div>
             <Link
               href="/top-offers"
-              className="hover:text-orange-100 transition duration-300 flex items-center"
+              className="hover:text-orange-500 transition duration-300 flex items-center"
             >
               <span className="mr-1">
                 <AwardIcon />

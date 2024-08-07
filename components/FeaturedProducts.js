@@ -74,8 +74,8 @@ const FeaturedProducts = () => {
   const renderRating = (rating, reviews) => {
     return (
       <div className="flex items-center text-xs">
-        <span className="text-blue-500 font-semibold mr-1">{rating}</span>
-        <Star className="w-3 h-3 text-blue-500 fill-current" />
+        <span className="text-orange-500 font-semibold mr-1">{rating}</span>
+        <Star className="w-3 h-3 text-orange-500 fill-current" />
         <span className="text-gray-400 ml-1">({reviews.toLocaleString()})</span>
       </div>
     );

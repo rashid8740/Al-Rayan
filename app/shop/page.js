@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import Image from "next/image";
+import Link from "next/link";
 import { useCart } from "@/contexts/CartContext";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
@@ -113,7 +114,6 @@ const products = [
     },
   },
 ];
-
 export default function Shop() {
   const [selectedCategory, setSelectedCategory] = useState(null);
   const { addToCart, removeFromCart, cart } = useCart();
@@ -149,7 +149,7 @@ export default function Shop() {
   return (
     <div className="flex flex-col min-h-screen">
       <Header />
-      <main className="flex-grow  pb-12">
+      <main className="flex-grow pb-12">
         <div className="container mx-auto px-4">
           <h1 className="text-2xl sm:text-3xl font-bold mb-4 mt-6 text-gray-800">
             Our Products
@@ -189,47 +189,51 @@ export default function Shop() {
                   onMouseEnter={() => setHoveredProduct(product.id)}
                   onMouseLeave={() => setHoveredProduct(null)}
                 >
-                  <div className="relative pt-[75%]">
-                    <div
-                      className="absolute inset-0 flex items-center justify-center"
-                      style={{ top: "-10%" }}
-                    >
-                      <div className="relative w-3/4 h-3/4">
-                        <Image
-                          src={product.image}
-                          alt={product.name}
-                          layout="fill"
-                          objectFit="contain"
-                          className="transition-transform duration-300 hover:scale-105"
-                        />
+                  <Link href={`/product/${product.id}`}>
+                    <div className="relative pt-[75%]">
+                      <div
+                        className="absolute inset-0 flex items-center justify-center"
+                        style={{ top: "-10%" }}
+                      >
+                        <div className="relative w-3/4 h-3/4">
+                          <Image
+                            src={product.image}
+                            alt={product.name}
+                            layout="fill"
+                            objectFit="contain"
+                            className="transition-transform duration-300 hover:scale-105"
+                          />
+                        </div>
                       </div>
                     </div>
-                  </div>
+                    <div className="p-2 sm:p-3">
+                      <h3 className="text-sm font-medium mb-1 text-gray-800 line-clamp-2 h-10">
+                        {product.name}
+                      </h3>
+                      {renderRating(product.rating, product.reviews)}
+                      <div className="mt-1 space-y-1">
+                        <div className="flex justify-between items-center">
+                          <p className="text-base font-bold text-gray-900">
+                            {formatPrice(product.price)}
+                          </p>
+                        </div>
+                        <div className="flex items-center justify-between text-xs">
+                          <span className="text-gray-500 line-through mr-2">
+                            {formatPrice(product.originalPrice)}
+                          </span>
+                          <span className="text-green-600 font-semibold">
+                            -
+                            {calculateDiscount(
+                              product.originalPrice,
+                              product.price
+                            )}
+                            %
+                          </span>
+                        </div>
+                      </div>
+                    </div>
+                  </Link>
                   <div className="p-2 sm:p-3">
-                    <h3 className="text-sm font-medium mb-1 text-gray-800 line-clamp-2 h-10">
-                      {product.name}
-                    </h3>
-                    {renderRating(product.rating, product.reviews)}
-                    <div className="mt-1 space-y-1">
-                      <div className="flex justify-between items-center">
-                        <p className="text-base font-bold text-gray-900">
-                          {formatPrice(product.price)}
-                        </p>
-                      </div>
-                      <div className="flex items-center justify-between text-xs">
-                        <span className="text-gray-500 line-through mr-2">
-                          {formatPrice(product.originalPrice)}
-                        </span>
-                        <span className="text-green-600 font-semibold">
-                          -
-                          {calculateDiscount(
-                            product.originalPrice,
-                            product.price
-                          )}
-                          %
-                        </span>
-                      </div>
-                    </div>
                     <div className="mt-2 flex items-center justify-between">
                       {quantity === 0 ? (
                         <button
