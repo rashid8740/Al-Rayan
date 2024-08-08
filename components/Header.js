@@ -13,6 +13,12 @@ import {
   Search,
   Phone,
   X,
+  Home,
+  ShoppingBag,
+  Tag,
+  Flame,
+  Zap,
+  Gift,
   AwardIcon,
 } from "lucide-react";
 import { useCart } from "../contexts/CartContext";
@@ -32,24 +38,32 @@ const Header = () => {
   );
 
   const menuItems = [
-    { href: "/", label: "Home", icon: User },
-    { href: "/shop", label: "Our Store", icon: ShoppingCart },
+    { href: "/", label: "Home", icon: Home },
+    { href: "/shop", label: "Our Store", icon: ShoppingBag },
     {
-      href: "/special",
-      label: "Special",
-      icon: User,
-      badge: { text: "SALE", color: "bg-yellow-400 text-red-600" },
+      href: "#special-sale",
+      label: "Special Sale",
+      icon: Tag,
+      badge: { text: "SALE", color: "bg-red-500 text-white" },
     },
     {
-      href: "/categories",
-      label: "Categories",
-      icon: Menu,
-      badge: { text: "HOT", color: "bg-red-500 text-white" },
+      href: "#hot-categories",
+      label: "Hot Categories",
+      icon: Flame,
+      badge: { text: "HOT", color: "bg-orange-500 text-white" },
     },
-    { href: "/top-deals", label: "Top Deals", icon: User },
-    { href: "/elements", label: "Elements", icon: Settings },
-    { href: "/top-offers", label: "Top Offers", icon: User },
+    { href: "#top-deals", label: "Top Deals", icon: Zap },
+    { href: "#top-offers", label: "Top Offers", icon: Gift },
   ];
+
+  const scrollToSection = (e, href) => {
+    e.preventDefault();
+    const element = document.querySelector(href);
+    if (element) {
+      element.scrollIntoView({ behavior: "smooth" });
+    }
+    setIsMenuOpen(false);
+  };
 
   const AccountMenu = () => (
     <div className="absolute right-0 mt-2 w-48 bg-white rounded-md overflow-hidden shadow-xl z-10">
@@ -272,25 +286,44 @@ const Header = () => {
               Browse Categories
             </button>
             <div className="flex items-center space-x-6">
-              {menuItems.slice(0, -1).map((item) => (
-                <Link
-                  key={item.href}
-                  href={item.href}
-                  className="hover:text-orange-500 transition duration-300 flex items-center"
-                >
-                  {item.label}
-                  {item.badge && (
-                    <span
-                      className={`ml-2 ${item.badge.color} text-xs font-bold px-2 py-1 rounded-full shadow-md transform hover:scale-110 transition-transform duration-300 uppercase`}
-                    >
-                      {item.badge.text}
-                    </span>
-                  )}
-                </Link>
-              ))}
+              {menuItems.slice(0, -1).map((item) =>
+                item.href.startsWith("#") ? (
+                  <a
+                    key={item.href}
+                    href={item.href}
+                    onClick={(e) => scrollToSection(e, item.href)}
+                    className="hover:text-orange-500 transition duration-300 flex items-center"
+                  >
+                    {item.label}
+                    {item.badge && (
+                      <span
+                        className={`ml-2 ${item.badge.color} text-xs font-bold px-2 py-1 rounded-full shadow-md transform hover:scale-110 transition-transform duration-300 uppercase`}
+                      >
+                        {item.badge.text}
+                      </span>
+                    )}
+                  </a>
+                ) : (
+                  <Link
+                    key={item.href}
+                    href={item.href}
+                    className="hover:text-orange-500 transition duration-300 flex items-center"
+                  >
+                    {item.label}
+                    {item.badge && (
+                      <span
+                        className={`ml-2 ${item.badge.color} text-xs font-bold px-2 py-1 rounded-full shadow-md transform hover:scale-110 transition-transform duration-300 uppercase`}
+                      >
+                        {item.badge.text}
+                      </span>
+                    )}
+                  </Link>
+                )
+              )}
             </div>
             <Link
-              href="/top-offers"
+              href="#top-offers"
+              onClick={(e) => scrollToSection(e, "#top-offers")}
               className="hover:text-orange-500 transition duration-300 flex items-center"
             >
               <span className="mr-1">
@@ -335,30 +368,57 @@ const Header = () => {
             </p>
           </div>
           <nav className="flex flex-col p-2">
-            {menuItems.map((item) => (
-              <Link
-                key={item.href}
-                href={item.href}
-                className={`flex items-center justify-between py-3 px-4 rounded-lg transition-colors duration-150 ${
-                  pathname === item.href
-                    ? "bg-orange-100 text-orange-600"
-                    : "text-gray-700 hover:bg-orange-50"
-                }`}
-              >
-                <div className="flex items-center">
-                  <item.icon size={20} className="mr-3 text-orange-500" />
-                  <span className="font-medium">{item.label}</span>
-                  {item.badge && (
-                    <span
-                      className={`ml-2 ${item.badge.color} text-xs font-bold px-2 py-1 rounded-full uppercase`}
-                    >
-                      {item.badge.text}
-                    </span>
-                  )}
-                </div>
-                <ChevronDown size={16} className="text-gray-400" />
-              </Link>
-            ))}
+            {menuItems.map((item) =>
+              item.href.startsWith("#") ? (
+                <a
+                  key={item.href}
+                  href={item.href}
+                  onClick={(e) => scrollToSection(e, item.href)}
+                  className={`flex items-center justify-between py-3 px-4 rounded-lg transition-colors duration-150 ${
+                    pathname === item.href
+                      ? "bg-orange-100 text-orange-600"
+                      : "text-gray-700 hover:bg-orange-50"
+                  }`}
+                >
+                  <div className="flex items-center">
+                    <item.icon size={20} className="mr-3 text-orange-500" />
+                    <span className="font-medium">{item.label}</span>
+                    {item.badge && (
+                      <span
+                        className={`ml-2 ${item.badge.color} text-xs font-bold px-2 py-1 rounded-full uppercase`}
+                      >
+                        {item.badge.text}
+                      </span>
+                    )}
+                  </div>
+                  <ChevronDown size={16} className="text-gray-400" />
+                </a>
+              ) : (
+                <Link
+                  key={item.href}
+                  href={item.href}
+                  className={`flex items-center justify-between py-3 px-4 rounded-lg transition-colors duration-150 ${
+                    pathname === item.href
+                      ? "bg-orange-100 text-orange-600"
+                      : "text-gray-700 hover:bg-orange-50"
+                  }`}
+                  onClick={() => setIsMenuOpen(false)}
+                >
+                  <div className="flex items-center">
+                    <item.icon size={20} className="mr-3 text-orange-500" />
+                    <span className="font-medium">{item.label}</span>
+                    {item.badge && (
+                      <span
+                        className={`ml-2 ${item.badge.color} text-xs font-bold px-2 py-1 rounded-full uppercase`}
+                      >
+                        {item.badge.text}
+                      </span>
+                    )}
+                  </div>
+                  <ChevronDown size={16} className="text-gray-400" />
+                </Link>
+              )
+            )}
           </nav>
           <div className="absolute bottom-0 left-0 right-0 p-4 bg-gray-50 border-t border-gray-200">
             {session ? (
@@ -378,6 +438,7 @@ const Header = () => {
               <Link
                 href="/auth/signin"
                 className="flex items-center text-gray-700 hover:text-orange-500"
+                onClick={() => setIsMenuOpen(false)}
               >
                 <User size={20} className="mr-2 text-orange-500" />
                 <span>Sign In</span>
