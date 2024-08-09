@@ -85,11 +85,11 @@ const SpecialSale = () => {
   };
 
   return (
-    <section className="py-4 md:py-1">
+    <section className="py-4 md:py-1 md:mt-8">
       <div className="container mx-auto">
-        <h2 className="text-2xl sm:text-lg font-bold mb-4 sm:mb-6 text-center text-gray-800 flex items-center justify-center">
+        <h2 className="md:text-3xl sm:text-lg font-bold mb-4 sm:mb-6 text-center text-gray-800 flex items-center justify-center">
           <Tag
-            className="w-5 h-5 md:w-8 md:h-8 text-red-500 mr-2"
+            className="w-5 h-5 md:w-8 md:h-8 text-red-500 mr-2 "
             id="special-sale"
           />
           Special Sale

@@ -85,7 +85,7 @@ const CategoriesHot = () => {
   };
 
   return (
-    <section className="py-6 sm:py-8 md:py-1">
+    <section className="py-6 sm:py-8 md:py-1 md:mt-8">
       <div className="container mx-auto">
         <h2 className="text-2xl sm:text-3xl font-bold mb-4 sm:mb-6 text-center text-gray-800 flex items-center justify-center">
           <Flame className="w-8 h-8 text-orange-500 mr-2" />
