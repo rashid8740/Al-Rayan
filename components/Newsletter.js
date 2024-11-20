@@ -2,9 +2,9 @@
 
 const Newsletter = () => {
   return (
-    <section className="bg-gray-50 py-9 md:py-12 mb-2 mt-4 ">
+    <section className="bg-gray-50 py-8 md:py-12 mb-2 mt-4 ">
       <div className="container mx-auto px-4 text-center">
-        <h2 className="text-2xl md:text-3xl font-bold mb-4">
+        <h2 className="text-2xl md:text-3xl font-bold mb-3">
           Subscribe to Our Newsletter
         </h2>
         <p className="mb-6 md:mb-8">
