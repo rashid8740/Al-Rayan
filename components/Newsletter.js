@@ -18,7 +18,7 @@ const Newsletter = () => {
           />
           <button
             type="submit"
-            className="bg-orange-500 text-white px-5 py-2 rounded-full md:rounded-l-none hover:bg-gray-800 transition duration-300"
+            className="bg-orange-500 text-white px-4 py-2 rounded-full md:rounded-l-none hover:bg-gray-800 transition duration-300"
           >
             Subscribe
           </button>
