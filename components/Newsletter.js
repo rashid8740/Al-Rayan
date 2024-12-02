@@ -14,7 +14,7 @@ const Newsletter = () => {
           <input
             type="email"
             placeholder="Enter your email"
-            className="flex-grow px-4 py-2 mb-2 md:mb-0 md:mr-2 rounded-full md:rounded-r-none focus:outline-none focus:ring-2 focus:ring-blue-500"
+            className="flex-grow px-4 py-2 mb-3 md:mb-0 md:mr-2 rounded-full md:rounded-r-none focus:outline-none focus:ring-2 focus:ring-blue-500"
           />
           <button
             type="submit"
